@@ -1,7 +1,6 @@
-package com.abttsupport.main.db;
+package com.sqltool.main.db;
 
-import com.abttsupport.main.misc.AtPrefLoader;
-import com.abttsupport.main.gui.QueryTab;
+import com.sqltool.main.gui.QueryTab;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,18 +88,6 @@ public class DatabaseConnectorGui extends JFrame {
             }
         });
 
-        loadServerSettings.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AtPrefLoader atPrefLoader = new AtPrefLoader();
-                serverField.setText(atPrefLoader.getServer());
-                portField.setText(atPrefLoader.getPort());
-                databaseField.setText(atPrefLoader.getDatabase());
-                atPrefLoader.closeStream();
-                userNameField.setText("abttdev");
-                passwordField.setText("abttdev");
-            }
-        });
 
         setContentPane(settingsPanel);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

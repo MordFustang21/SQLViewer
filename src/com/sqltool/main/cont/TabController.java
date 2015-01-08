@@ -1,9 +1,9 @@
-package com.abttsupport.main.cont;
+package com.sqltool.main.cont;
 
-import com.abttsupport.main.gui.ProgressBar;
-import com.abttsupport.main.gui.QueryTab;
-import com.abttsupport.main.db.DatabaseDat;
-import com.abttsupport.main.misc.QueryAnalyzer;
+import com.sqltool.main.gui.ProgressBar;
+import com.sqltool.main.gui.QueryTab;
+import com.sqltool.main.db.DatabaseDat;
+import com.sqltool.main.misc.QueryAnalyzer;
 
 import javax.swing.*;
 import java.sql.Connection;

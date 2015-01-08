@@ -1,6 +1,6 @@
-package com.abttsupport.main.db;
+package com.sqltool.main.db;
 
-import com.abttsupport.main.gui.SqlViewer;
+import com.sqltool.main.gui.SqlViewer;
 
 import javax.swing.*;
 import java.sql.Connection;

@@ -1,4 +1,4 @@
-package com.abttsupport.main.misc;
+package com.sqltool.main.misc;
 
 import java.util.ArrayList;
 

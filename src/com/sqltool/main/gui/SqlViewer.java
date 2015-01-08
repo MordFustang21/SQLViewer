@@ -1,8 +1,9 @@
-package com.abttsupport.main.gui;
+package com.sqltool.main.gui;
 
-import com.abttsupport.main.db.DatabaseConnector;
-import com.abttsupport.main.db.DatabaseDat;
-import com.abttsupport.main.misc.AtPrefLoader;
+import com.sqltool.main.db.DatabaseConnector;
+import com.sqltool.main.db.DatabaseDat;
+import com.sqltool.main.db.DatabaseConnector;
+import com.sqltool.main.db.DatabaseDat;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -108,19 +109,6 @@ public class SqlViewer {
             }
         });
 
-        //Load the server settings from pref files
-        loadServerSettingsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AtPrefLoader atPrefLoader = new AtPrefLoader();
-                serverField.setText(atPrefLoader.getServer());
-                portField.setText(atPrefLoader.getPort());
-                databaseField.setText(atPrefLoader.getDatabase());
-                atPrefLoader.closeStream();
-                usernameField.setText("abttdev");
-                passwordField.setText("abttdev");
-            }
-        });
 
         //Add popup menu
         JPopupMenu queryPopup = new JPopupMenu();

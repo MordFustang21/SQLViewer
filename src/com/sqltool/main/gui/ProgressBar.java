@@ -1,4 +1,4 @@
-package com.abttsupport.main.gui;
+package com.sqltool.main.gui;
 
 import javax.swing.*;
 import javax.swing.border.Border;

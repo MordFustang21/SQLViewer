@@ -1,4 +1,4 @@
-package com.abttsupport.main.db;
+package com.sqltool.main.db;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

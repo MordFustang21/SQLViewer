@@ -1,8 +1,9 @@
-package com.abttsupport.main.gui;
+package com.sqltool.main.gui;
 
-import com.abttsupport.main.cont.TabController;
-import com.abttsupport.main.db.DatabaseConnectorGui;
-import com.abttsupport.main.misc.QueryAnalyzer;
+import com.sqltool.main.cont.TabController;
+import com.sqltool.main.db.DatabaseConnectorGui;
+import com.sqltool.main.misc.QueryAnalyzer;
+import com.sqltool.main.db.DatabaseConnectorGui;
 
 import javax.swing.*;
 import java.awt.*;
