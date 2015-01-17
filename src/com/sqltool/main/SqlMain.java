@@ -8,12 +8,11 @@ import javax.swing.*;
 /**
  * Created by dlaird on 12/30/14.
  */
-public class SupportTool {
+public class SqlMain {
 
     public static void main(String[] args) {
-            boolean sqlOnly = true;
-                setUiManager();
-                SqlViewer.getInstance();
+        setUiManager();
+        SqlViewer.getInstance();
 
     }
 
