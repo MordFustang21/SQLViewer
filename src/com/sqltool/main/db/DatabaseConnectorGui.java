@@ -16,6 +16,7 @@ public class DatabaseConnectorGui extends JFrame {
     private Connection connection = null;
 
     private JCheckBox useOdbc = new JCheckBox("ODBC");
+    private JCheckBox useOracle = new JCheckBox("Oracle");
 
     private JPanel settingsPanel = new JPanel();
     private JLabel serverLabel = new JLabel("Server:");
@@ -35,14 +36,13 @@ public class DatabaseConnectorGui extends JFrame {
 
     private JButton connect = new JButton("Connect");
     private JButton cancel = new JButton("Cancel");
-    private JButton loadServerSettings = new JButton("Server Settings");
 
     public DatabaseConnectorGui(final QueryTab queryTab) {
 
         //Create panel
         settingsPanel.setLayout(new GridLayout(7, 2));
         settingsPanel.add(useOdbc);
-        settingsPanel.add(loadServerSettings);
+        settingsPanel.add(useOracle);
         settingsPanel.add(serverLabel);
         settingsPanel.add(serverField);
         settingsPanel.add(portLabel);
@@ -69,6 +69,8 @@ public class DatabaseConnectorGui extends JFrame {
 
                 if (useOdbc.isSelected()) {
                     connection = new DatabaseConnector().makeOdbcConnection(database, username, password);
+                } else if (useOracle.isSelected()) {
+                    connection = new DatabaseConnector().makeOracleConnector(server, port, database, username, password);
                 } else {
                     connection = new DatabaseConnector().makeSqlConnection(server, port, database, username, password);
                 }
@@ -77,6 +79,7 @@ public class DatabaseConnectorGui extends JFrame {
                     queryTab.setConnection(connection);
                     queryTab.setDatabaseLabel(database);
                 }
+
                 dispose();
             }
         });
@@ -90,10 +93,15 @@ public class DatabaseConnectorGui extends JFrame {
 
 
         setContentPane(settingsPanel);
+
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
         setTitle("New Connection");
+
         setSize(300, 225);
+
         setLocationRelativeTo(null);
+
         setVisible(true);
     }
 }

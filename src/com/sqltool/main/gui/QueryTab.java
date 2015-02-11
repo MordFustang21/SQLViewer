@@ -2,6 +2,7 @@ package com.sqltool.main.gui;
 
 import com.sqltool.main.cont.TabController;
 import com.sqltool.main.db.DatabaseConnectorGui;
+import com.sqltool.main.gui.tabcomponents.TabPopup;
 import com.sqltool.main.misc.QueryAnalyzer;
 import com.sqltool.main.db.DatabaseConnectorGui;
 
@@ -63,84 +64,7 @@ public class QueryTab {
             }
         });
 
-        //Add popup menu
-        final JPopupMenu queryPopup = new JPopupMenu();
-        queryText.setComponentPopupMenu(queryPopup);
-
-        //Backup table
-        JMenuItem backupTableMenu = new JMenuItem("Backup Table");
-        backupTableMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Back up table
-                String tableName = getTableName();
-                String backupQuery = "select * into " + tableName + "Bak from " + tableName;
-                System.err.println(backupQuery);
-
-                //databaseDat.executeUpdate(backupQuery);
-            }
-        });
-        queryPopup.add(backupTableMenu);
-
-        //Restore table
-        JMenuItem restoreTableMenu = new JMenuItem("Restore Backup");
-        restoreTableMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String tableName = getTableName();
-
-                String dropTableQuery = "drop table " + tableName;
-                String restoreTableQuery = " select * into " + tableName + " from " + tableName + "Bak";
-                System.err.println(dropTableQuery + restoreTableQuery);
-
-                //databaseDat.executeUpdate(dropTableQuery + restoreTableQuery);
-            }
-        });
-        queryPopup.add(restoreTableMenu);
-
-        //Drop backuptable
-        JMenuItem dropBackupMenu = new JMenuItem("Drop BackupTable");
-        dropBackupMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String dropBackupTable = "drop table " + getTableName() + "Bak";
-                System.err.println(dropBackupTable);
-                //queryController.executeUpdate(dropBackupTable);
-            }
-        });
-        queryPopup.add(dropBackupMenu);
-
-        //List Tables
-        JMenuItem tableList = new JMenuItem("Get list of Tables");
-        tableList.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                QueryAnalyzer.getListOfTables(queryText.getText());
-            }
-        });
-        queryPopup.add(tableList);
-
-        //New connection
-        JMenuItem addTab = new JMenuItem("New Connection");
-        addTab.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Show server setting
-                new DatabaseConnectorGui(instance);
-            }
-        });
-        queryPopup.add(addTab);
-
-        //Use main connection
-        JMenuItem removeConnection = new JMenuItem("Remove Connection");
-        removeConnection.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                connection = null;
-                setDatabaseLabel("Main Connection");
-            }
-        });
-        queryPopup.add(removeConnection);
+        queryText.setComponentPopupMenu(new TabPopup(instance));
     }
 
     //Find selected text or all
@@ -154,18 +78,6 @@ public class QueryTab {
         }
 
         return query;
-    }
-
-    public String getTableName() {
-        String[] queryContent = getQueryText().split(" ");
-        for (int i = 0; i < queryContent.length; i++) {
-            if (queryContent[i].equals("from")) {
-                i++;
-                System.err.println("Table: " + queryContent[i]);
-                return queryContent[i];
-            }
-        }
-        return "Test";
     }
 
     public void updateStatistics() {

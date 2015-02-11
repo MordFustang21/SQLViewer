@@ -55,9 +55,9 @@ public class DatabaseConnector {
         return null;
     }
 
-    public Connection getOracleConnector(String server, String port, String database, String username, String password) {
+    public Connection makeOracleConnector(String server, String port, String database, String username, String password) {
         errorConsole = SqlViewer.getInstance().getErrorConsole();
-        String url = "jdbc:oracle:thin:@" + server + ":" + port + ":" + database;
+        String url = "jdbc:oracle:thin:@" + server + ":" + port + "/" + database;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             try {

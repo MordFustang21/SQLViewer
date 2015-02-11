@@ -35,10 +35,7 @@ public class SqlViewer {
     private DatabaseConnector databaseConnector = new DatabaseConnector();
     private DatabaseDat databaseDat = DatabaseDat.getInstance();
     private JLabel tableStatistics;
-    private JButton loadServerSettingsButton;
     private JPanel queryPanel;
-    private Connection connection;
-    private DefaultTableModel queryModel = null;
 
     public static SqlViewer getInstance() {
         if (instance == null) {
@@ -114,49 +111,6 @@ public class SqlViewer {
         JPopupMenu queryPopup = new JPopupMenu();
         queryText.setComponentPopupMenu(queryPopup);
 
-        //Backup table
-        JMenuItem backupTableMenu = new JMenuItem("Backup Table");
-        backupTableMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Back up table
-                String tableName = getTableName();
-                String backupQuery = "select * into " + tableName + "Bak from " + tableName;
-                System.err.println(backupQuery);
-
-                databaseDat.executeUpdate(backupQuery);
-            }
-        });
-        queryPopup.add(backupTableMenu);
-
-        //Restore table
-        JMenuItem restoreTableMenu = new JMenuItem("Restore Backup");
-        restoreTableMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String tableName = getTableName();
-
-                String dropTableQuery = "drop table " + tableName;
-                String restoreTableQuery = " select * into " + tableName + " from " + tableName + "Bak";
-                System.err.println(dropTableQuery + restoreTableQuery);
-
-                databaseDat.executeUpdate(dropTableQuery + restoreTableQuery);
-            }
-        });
-        queryPopup.add(restoreTableMenu);
-
-        //Drop backuptable
-        JMenuItem dropBackupMenu = new JMenuItem("Drop BackupTable");
-        dropBackupMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String dropBackupTable = "drop table " + getTableName() + "Bak";
-                System.err.println(dropBackupTable);
-                databaseDat.executeUpdate(dropBackupTable);
-            }
-        });
-        queryPopup.add(dropBackupMenu);
-
         //New tab
         JMenuItem addTab = new JMenuItem("New Tab");
         addTab.addActionListener(new ActionListener() {
@@ -167,7 +121,6 @@ public class SqlViewer {
                 tabbedPane1.add(new QueryTab().getQueryPanel(), "Query Tab" + (tabIndex), tabIndex);
             }
         });
-        queryPopup.add(addTab);
 
         //Menu item to close tabs
         JPopupMenu closeMenu = new JPopupMenu();
@@ -181,6 +134,7 @@ public class SqlViewer {
                 }
             }
         });
+        queryPopup.add(addTab);
         closeMenu.add(closeTab);
 
 
@@ -273,19 +227,19 @@ public class SqlViewer {
         return query;
     }
 
-    //Check to see if backup exists so that it wont be overwritten
-    public Boolean checkForBackup() {
-        //TODO: Check to see if backup exists if not
-        return false;
-    }
-
     public void createConnection() {
+        String username = usernameField.getText();
+        String password = String.valueOf(passwordField.getPassword());
+        String server = serverField.getText();
+        String database = databaseField.getText();
+        String port = portField.getText();
+
         if (useODBCCheckBox.isSelected()) {
             errorConsole.append("Connecting using ODBC\n");
-            databaseDat.setConnection(databaseConnector.makeOdbcConnection(databaseField.getText(), usernameField.getText(), String.valueOf(passwordField.getPassword())));
+            databaseDat.setConnection(databaseConnector.makeOdbcConnection(database, username, password));
         } else {
             errorConsole.append("Connecting using SQLServer\n");
-            databaseDat.setConnection(databaseConnector.makeSqlConnection(serverField.getText(), portField.getText(), databaseField.getText(), usernameField.getText(), String.valueOf(passwordField.getPassword())));
+            databaseDat.setConnection(databaseConnector.makeSqlConnection(server, port, database, username, password));
         }
     }
 
